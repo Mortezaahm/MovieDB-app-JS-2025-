@@ -26,7 +26,3 @@ The app fetches real-time movie data from a public API and allows users to explo
 - Axios / Fetch API  
 - LocalStorage or SessionStorage  
 - Git & GitHub for version control
-
-
-## 🗂️ Project Structure
-
