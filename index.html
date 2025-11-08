@@ -1,28 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Movie website</title>
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
-        <header>
-            <nav>
-                <img src="img/cmore.png" alt="" />
-            </nav>
-        </header>
-        <section class="hero"></section>
-        <main>
-            <h2>Populära filmer</h2>
-            <section class="movie-container" id="popular"></section>
-            <h2>Filmer med högsta betyg</h2>
-            <section class="movie-container" id="top"></section>
-            <h2>Kommande filmer</h2>
-            <section class="movie-container" id="upcoming"></section>
-            <h2>Filmer som spelas just nu</h2>
-            <section class="movie-container" id="playing"></section>
-        </main>
-        <script src="index.js"></script>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie website</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <img src="img/cmore.png" alt="" />
+        <ul>
+          <li><a href="#">Hem</a></li>
+          <li><a href="#">Filmer</a></li>
+          <li><a href="#">Serier</a></li>
+          <li><a href="#">Barn</a></li>
+          <li><a href="#">Sport</a></li>
+          <li><a href="#">Om oss</a></li>
+        </ul>
+        <div class="loginBtn">
+          <button class="btn btn-primary mx-2">Logga in</button>
+          <button class="btn btn-secondary">Registrera</button>
+        </div>
+      </nav>
+    </header>
+    <section class="hero"></section>
+    <main>
+      <h2>Populära filmer</h2>
+      <section class="movie-container" id="popular"></section>
+      <h2>Filmer med högsta betyg</h2>
+      <section class="movie-container" id="top"></section>
+      <h2>Kommande filmer</h2>
+      <section class="movie-container" id="upcoming"></section>
+      <h2>Filmer som spelas just nu</h2>
+      <section class="movie-container" id="playing"></section>
+    </main>
+    <script src="index.js"></script>
+  </body>
 </html>
