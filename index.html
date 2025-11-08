@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movie website</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png" />
     <link rel="stylesheet" href="style.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
@@ -18,18 +19,68 @@
         <img src="img/cmore.png" alt="" />
         <ul>
           <li><a href="#">Hem</a></li>
-          <li><a href="#">Filmer</a></li>
-          <li><a href="#">Serier</a></li>
-          <li><a href="#">Barn</a></li>
-          <li><a href="#">Sport</a></li>
+          <li><a href="#popular">Populära filmer</a></li>
+          <li><a href="#upcoming">Kommande filmer</a></li>
+          <li><a href="#playing">spelas just nu</a></li>
           <li><a href="#">Om oss</a></li>
         </ul>
         <div class="loginBtn">
-          <button class="btn btn-primary mx-2">Logga in</button>
-          <button class="btn btn-secondary">Registrera</button>
+          <button id="LoggaIn" class="btn btn-primary mx-2">Logga in</button>
+          <button id="Registrera" class="btn btn-secondary">Registrera</button>
         </div>
       </nav>
     </header>
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Login</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="loginForm">
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-success">Login</button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
     <section class="hero"></section>
     <main>
       <h2>Populära filmer</h2>
@@ -42,5 +93,6 @@
       <section class="movie-container" id="playing"></section>
     </main>
     <script src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
