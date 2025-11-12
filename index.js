@@ -148,3 +148,23 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   );
   modal.hide();
 });
+
+// Back to top button funktionalitet
+const backToTopBtn = document.getElementById("backToTop");
+
+// when the user scrolls down 100px from the top of the document, show the button
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 100) {
+    backToTopBtn.style.display = "block";
+  } else {
+    backToTopBtn.style.display = "none";
+  }
+});
+
+// when the user clicks the button
+backToTopBtn.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+});

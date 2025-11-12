@@ -220,3 +220,24 @@ main .movie-container .movie-card:hover .overlay {
 .simple-modal .modal-box p {
   line-height: 1.5;
 }
+
+/* Back to top knapp */
+
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: none;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+#backToTop:hover {
+  background-color: #555;
+}
