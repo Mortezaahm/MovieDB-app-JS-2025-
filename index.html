@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Filmsida</title>
+
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png" />
+
+    <!-- Bootstrap CSS (grundstil och komponenter) -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <!-- CSS (layout, färger och komponentstilar) -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- NAVIGATION: Innehåller logotyp, huvudlänkar och sammanslagen sökruta -->
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-nav">
+        <div class="container align-items-center justify-content-between">
+          <!-- Varumärke / logotyp -->
+          <a class="navbar-brand d-flex align-items-center gap-2 me-2" href="#">
+            <img
+              src="cmore  logo.png"
+              alt="C More"
+              class="brand-logo"
+              width="136"
+              height="34"
+              decoding="async"
+              loading="eager"
+              style="height: auto"
+            />
+          </a>
+
+          <!-- Menyknapp för små skärmar -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Växla meny"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Kollapsbart nav-innehåll -->
+          <div class="collapse navbar-collapse" id="mainNavbar">
+            <!-- Huvudlänkar till sektioner på sidan -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link active" href="#">Hem</a></li>
+              <li class="nav-item"><a class="nav-link" href="#popular">Populära filmer</a></li>
+              <li class="nav-item"><a class="nav-link" href="#top">Högst betyg</a></li>
+              <li class="nav-item"><a class="nav-link" href="#upcoming">Kommande filmer</a></li>
+              <li class="nav-item"><a class="nav-link" href="#playing">Spelas nu</a></li>
+              <li class="nav-item"><a class="nav-link" href="OmOss.html">Om oss</a></li>
+            </ul>
+
+            <!-- Hjälpytor: sök + inloggning/registrering -->
+            <div class="navbar-utility">
+              <!-- EN sammanslagen sökruta (ingen genre-dropdown) -->
+              <form id="searchForm" class="navbar-search" role="search">
+                <label for="searchName" class="visually-hidden">Sök</label>
+                <div class="search-wrapper">
+                  <input
+                    id="searchName"
+                    type="search"
+                    placeholder="Sök Titel, Serier, Genre...."
+                    aria-label="Sök"
+                  />
+                </div>
+              </form>
+
+              <!-- Inloggning / registrering (öppnar Bootstrap-modal) -->
+              <div class="navbar-actions d-flex align-items-center">
+                <button
+                  id="LoggaIn"
+                  class="btn btn-outline-light btn-sm me-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#loginModal"
+                >
+                  Logga in
+                </button>
+                <button id="Registrera" class="btn btn-light btn-sm">
+                  Registrera
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- INLOGGNINGSMODAL (Bootstrap) -->
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Logga in</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Stäng"></button>
+          </div>
+          <div class="modal-body">
+            <form id="loginForm">
+              <div class="mb-3">
+                <label for="username" class="form-label">Användarnamn</label>
+                <input type="text" class="form-control" id="username" required />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Lösenord</label>
+                <input type="password" class="form-control" id="password" required />
+              </div>
+              <button type="submit" class="btn btn-success">Logga in</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Stäng</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO bakgrundsbild + text sätts i javascript -->
+    <section class="hero"></section>
+
+    <!-- HUVUDINNEHÅLL (listor fylls i java) -->
+    <main>
+      <!-- Resultatsektion visas endast när sökningar ger träff -->
+      <h2 id="searchHeading" class="d-none">Sökresultat</h2>
+      <section class="movie-container d-none" id="search"></section>
+      <div id="noResults" class="alert alert-warning d-none mt-3" role="alert">
+        Inga matchande filmer hittades.
+      </div>
+
+      <h2>Populära filmer</h2>
+      <section class="movie-container" id="popular"></section>
+
+      <h2>Filmer med högsta betyg</h2>
+      <section class="movie-container" id="top"></section>
+
+      <h2>Kommande filmer</h2>
+      <section class="movie-container" id="upcoming"></section>
+
+      <h2>Filmer som spelas just nu</h2>
+      <section class="movie-container" id="playing"></section>
+    </main>
+
+    <!-- SCRIPT Bootstrap + applikationslogik -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="index.js"></script>
+  </body>
+</html>

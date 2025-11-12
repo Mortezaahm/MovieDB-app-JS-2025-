@@ -1,0 +1,395 @@
+/* Globala variabler (färger, spacing, typografi) */
+
+:root {
+  /* Färger */
+
+  --black: #000000;
+  --gray-dark: #66666e;
+  --gray: #9999a1;
+  --gray-light: #e6e6e9;
+  --gray-lighter: #f4f4f6;
+  --overlay: rgba(0, 0, 0, 0.8);
+  --overlay-hero: rgba(0, 0, 0, 0.6); /* nytt hero-overlay */
+  --overlay-modal: rgba(0, 0, 0, 0.6); /* modal-overlay */
+  --modal-bg: rgba(15, 15, 15, 0.9); /* mörkt modaltema */
+  --button-text: #ffffff;
+
+  /* Tema */
+
+  --background: var(--black);
+  --text: var(--gray-lighter);
+  --text-muted: var(--gray);
+  --border-color: var(--gray-light);
+  --primary-color: var(--gray-dark);
+
+  /* Typsnitt */
+
+  --font-main: Arial, Helvetica, sans-serif;
+  --fs-base: 1rem;
+  --fs-h1: 2.5rem;
+  --fs-h2: 1.8rem;
+  --fs-h3: 1.5rem;
+  --fs-meta: 0.95rem;
+  --fw-normal: 400;
+  --fw-bold: 600;
+
+  /* Spacing */
+
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 0.75rem;
+  --space-lg: 1rem;
+  --space-xl: 1.5rem;
+  --space-xxl: 2rem;
+
+  /* Kanter & radie */
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --border-width: 1px;
+  --border-style: solid;
+
+  /* Effekter */
+
+  --transition-speed: 0.35s;
+  --blur: 5px;
+
+  /* Logotypmått */
+
+  --logo-h: 34px;
+  --logo-w: 160px;
+  --logo-gap: 0.5rem;
+
+  /* Kort/hero/modal mått */
+
+  --card-width: clamp(140px, 16vw, 200px); /* responsiv kortbredd */
+  --card-aspect: 2 / 3; /* behåll affischratio */
+  --hero-height: 360px; /* hero-höjd med variabel */
+  --modal-width: 560px; /* modal maxbredd */
+}
+
+/* Reset & bas */
+*,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background); /* temavariabler ersätter fasta värden */
+  color: var(--text); /* tema */
+  font-family: var(--font-main);
+  font-size: var(--fs-base);
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  margin-bottom: var(--space-sm);
+  font-weight: var(--fw-bold);
+} /* typografi via variabler */
+h2 {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-normal);
+  margin-bottom: var(--space-sm);
+  color: var(--text);
+}
+h3 {
+  text-align: center;
+  color: var(--text);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-bold);
+}
+p {
+  font-size: var(--fs-base);
+}
+@media (min-width: 992px) {
+  p {
+    margin-bottom: var(--space-xl);
+  }
+} /* spacing */
+
+/* Navbar (färg och spacing) */
+
+.bg-nav {
+  background-color: var(--black) !important;
+} /* nav-bakgrund */
+
+.navbar {
+  padding-left: 0;
+} /* optisk balans */
+.navbar .container {
+  padding-left: 0.25rem;
+} /* finjustering */
+
+.navbar .navbar-collapse {
+  overflow: hidden;
+} /* förhindrar layout-hopp */
+
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--logo-gap);
+  min-width: 0;
+  margin-right: 1.5rem;
+} /* varumärkeslayout */
+.brand-logo {
+  display: block;
+  max-height: var(--logo-h);
+  max-width: var(--logo-w);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  vertical-align: middle;
+} /* logoresponsivitet */
+
+.navbar-nav .nav-link {
+  padding: calc(var(--space-sm) + 0.2rem) var(--space-sm);
+  color: var(--text) !important;
+  white-space: nowrap;
+  font-weight: var(--fw-normal);
+  transition: color var(--transition-speed);
+} /* länkutseende */
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: var(--gray-light) !important;
+} /* hover/aktiv */
+
+.navbar-utility {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex: 0 1 auto;
+  min-width: 0;
+} /* wrapper för sök/knappar */
+@media (max-width: 1199.98px) {
+  .navbar-utility {
+    flex-wrap: wrap;
+    row-gap: var(--space-sm);
+    width: 100%;
+    justify-content: flex-start;
+  } /* responsivitet */
+}
+
+/* Sökruta  */
+
+.navbar-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 540px;
+  margin: 0 auto;
+} /* ny sökplacering */
+
+.search-wrapper {
+  display: flex;
+  width: 100%;
+  background: #111;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden; /* förhindrar att inner-element bryter utanför radien */
+} /* ny sökstil */
+
+.search-wrapper input {
+  flex: 1;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--fs-base);
+}
+.search-wrapper input::placeholder {
+  color: var(--gray);
+}
+.search-wrapper input:focus {
+  outline: none;
+  background: #1a1a1a;
+  /* diskret fokusfeedback */
+}
+
+/* Åtgärdsknappar till höger om sök */
+.navbar-actions {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+} /* knapplayout */
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .brand-logo {
+    max-height: 30px;
+  } /* logo tweak */
+  .navbar-nav .nav-link {
+    padding: var(--space-sm) var(--space-sm);
+  } /* kompakt menyer */
+}
+
+/* Hero (bakgrundsbild + text) */
+.hero {
+  background-size: cover;
+  color: var(--text);
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: var(--space-xl);
+} /* hero via variabler */
+
+@media (min-width: 480px) {
+  .hero {
+    height: var(--hero-height);
+  }
+} /* responsiv höjd */
+
+@media (max-width: 479.98px) {
+  .hero {
+    height: 260px;
+  }
+} /* mobilhöjd */
+
+.hero .hero-text {
+  padding: var(--space-xl);
+  background-color: var(--overlay-hero);
+  backdrop-filter: blur(var(--blur));
+  max-width: 1200px;
+  margin: 0 auto;
+  flex: 0 0 100%;
+  border-radius: var(--radius-md);
+} /* bättre läsbarhet över bild */
+
+/* Layout (innehållsbredd) */
+
+main {
+  padding: var(--space-lg);
+}
+@media (min-width: 992px) {
+  main {
+    max-width: 1200px;
+    margin: auto;
+  }
+} /* centrerad layout */
+
+/* Filmlistor (horisontell scroll) */
+
+.movie-container {
+  display: flex;
+  overflow-x: auto;
+  padding: var(--space-lg) 0;
+  margin-bottom: var(--space-xxl);
+  gap: var(--space-md);
+  scroll-behavior: smooth;
+} /* modern scroll-layout */
+
+/* Filmkort (affischer) */
+
+.movie-card {
+  flex: 0 0 var(--card-width);
+  position: relative;
+  border: var(--border-width) var(--border-style) var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--modal-bg);
+  transition: transform var(--transition-speed);
+} /* nytt kortutseende */
+
+.movie-card:hover {
+  transform: scale(1.02);
+} /* diskret hover */
+
+.movie-card img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--card-aspect);
+  object-fit: cover;
+  display: block;
+  border-radius: var(--radius-sm);
+} /* bevara ratio */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: var(--overlay);
+  padding: 0 var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-speed);
+} /* overlay vid hover */
+.movie-card:hover .overlay {
+  opacity: 1;
+}
+
+/* Enkel modal för detaljer */
+
+.simple-modal {
+  position: fixed;
+  inset: 0;
+  background-color: var(--overlay-modal);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+} /* modalbakgrund */
+
+.modal-box {
+  background-color: var(--modal-bg);
+  border: var(--border-width) var(--border-style) var(--border-color);
+  padding: var(--space-xl);
+  border-radius: var(--radius-md);
+  width: 95%;
+  max-width: var(--modal-width);
+  color: var(--text);
+  position: relative;
+  line-height: 1.7;
+  font-size: 1.05rem;
+} /* modal-stil */
+
+.close-button {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background: none;
+  border: var(--border-width) var(--border-style) var(--border-color);
+  color: var(--text);
+  font-size: calc(var(--fs-base) - 0.1rem);
+  cursor: pointer;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-speed);
+} /* stängknapp */
+
+.close-button:hover {
+  background: var(--gray-dark);
+}
+.modal-box h2 {
+  margin: var(--space-md) 0 var(--space-md);
+}
+.modal-box p {
+  line-height: 1.5;
+}
+.modal-meta {
+  color: var(--gray-light);
+  font-size: var(--fs-meta);
+} /* meta-stil */
+
+.modal-actors {
+  margin-top: var(--space-sm);
+} /* actors-stil */
+
+/* Scrollbars (WebKit-baserade) */
+/*Optional, kosmetik för scrollbars i filmlistor*/
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+} /* kosmetik */
+::-webkit-scrollbar-track {
+  background: var(--gray-dark);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--gray);
+  border-radius: 9px;
+  border: 2px solid var(--gray-dark);
+}
+/* Hover-effekt för scrollbar-thumb */
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--gray-light);
+}
