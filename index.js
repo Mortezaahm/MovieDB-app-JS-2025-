@@ -1,11 +1,11 @@
+// ------------------ NEVENA part ------------------ //
+// NEVENA backend code for MovieDB app
 // API:er
-
 const API_KEY = "2b744f1e134577232755c6ac96d94497";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMG_BASE = "https://image.tmdb.org/t/p/original";
 
 //Samlade endpoints för de olika filmkategorierna
-
 const endpoints = {
   popular: `${BASE_URL}/movie/popular?api_key=${API_KEY}`,
   top: `${BASE_URL}/movie/top_rated?api_key=${API_KEY}`,
@@ -78,7 +78,6 @@ function showMovieDetails(movieId) {
 }
 
 // fetch-funktionalitet
-
 async function loadMovies(url, containerId) {
   try {
     const response = await fetch(url);
@@ -118,7 +117,10 @@ loadMovies(endpoints.top, "#top");
 loadMovies(endpoints.upcoming, "#upcoming");
 loadMovies(endpoints.playing, "#playing");
 
-// Navbar button funktionalitet
+// ------------------ End of NEVENA part ------------------ //
+
+// ------------------ MORTEZA part ------------------ //
+// Navbar button funktionalitet MORTEZA
 const loginBtn = document.querySelector("#LoggaIn");
 const registerBtn = document.querySelector("#Registrera");
 
@@ -133,7 +135,7 @@ function openLoginModal() {
   loginModal.show();
 }
 
-// Hantera inloggningsformulär
+// Hantera inloggningsformulär MORTEZA
 document.getElementById("loginForm").addEventListener("submit", function (e) {
   e.preventDefault();
   const username = document.getElementById("username").value;
@@ -149,7 +151,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   modal.hide();
 });
 
-// Back to top button funktionalitet
+// Back to top button funktionalitet MORTEZA
 
 const scrollBtn = document.getElementById("scrollToTopBtn");
 
@@ -165,21 +167,4 @@ scrollBtn.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-// const backToTopBtn = document.getElementById("backToTop");
-
-// // when the user scrolls down 100px from the top of the document, show the button
-// window.addEventListener("scroll", () => {
-//   if (window.scrollY > 100) {
-//     backToTopBtn.style.display = "block";
-//   } else {
-//     backToTopBtn.style.display = "none";
-//   }
-// });
-
-// // when the user clicks the button
-// backToTopBtn.addEventListener("click", () => {
-//   window.scrollTo({
-//     top: 0,
-//     behavior: "smooth",
-//   });
-// });
+// ------------------ End of MORTEZA part ------------------ //
