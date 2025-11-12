@@ -221,23 +221,45 @@ main .movie-container .movie-card:hover .overlay {
   line-height: 1.5;
 }
 
-/* Back to top knapp */
+/* Back to top button */
 
-#backToTop {
+#scrollToTopBtn {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background-color: #333;
-  color: white;
-  border: none;
+  bottom: 2rem;
+  right: 2rem;
+  border-radius: 30px;
   padding: 10px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: none;
-  font-size: 18px;
-  transition: 0.3s;
+  z-index: 1000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 }
 
-#backToTop:hover {
-  background-color: #555;
+/* text is out */
+#scrollToTopBtn .back-text {
+  position: absolute;
+  right: 100%; /* out of button */
+  opacity: 0;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  font-size: 12px;
+}
+
+/* when hovered */
+#scrollToTopBtn:hover {
+  padding-right: 5rem; /* extra space for text */
+  transform: scale(1.3); /* enlarge button */
+}
+
+#scrollToTopBtn:hover .back-text {
+  right: 1rem; /* text appears inside button */
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  #scrollToTopBtn .back-text {
+    display: inline;
+  }
 }

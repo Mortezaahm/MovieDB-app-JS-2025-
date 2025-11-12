@@ -46,7 +46,7 @@ function createCard(movie) {
 function showMovieDetails(movieId) {
   const url = `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`;
 
-  fetch(url)
+  fetch(url) // vi kan använda axios här också
     .then((res) => res.json())
     .then((movie) => {
       const modal = document.createElement("div");
@@ -150,21 +150,36 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 });
 
 // Back to top button funktionalitet
-const backToTopBtn = document.getElementById("backToTop");
 
-// when the user scrolls down 100px from the top of the document, show the button
+const scrollBtn = document.getElementById("scrollToTopBtn");
+
 window.addEventListener("scroll", () => {
-  if (window.scrollY > 100) {
-    backToTopBtn.style.display = "block";
+  if (window.scrollY > 200) {
+    scrollBtn.style.display = "flex";
   } else {
-    backToTopBtn.style.display = "none";
+    scrollBtn.style.display = "none";
   }
 });
 
-// when the user clicks the button
-backToTopBtn.addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
+scrollBtn.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
+
+// const backToTopBtn = document.getElementById("backToTop");
+
+// // when the user scrolls down 100px from the top of the document, show the button
+// window.addEventListener("scroll", () => {
+//   if (window.scrollY > 100) {
+//     backToTopBtn.style.display = "block";
+//   } else {
+//     backToTopBtn.style.display = "none";
+//   }
+// });
+
+// // when the user clicks the button
+// backToTopBtn.addEventListener("click", () => {
+//   window.scrollTo({
+//     top: 0,
+//     behavior: "smooth",
+//   });
+// });
