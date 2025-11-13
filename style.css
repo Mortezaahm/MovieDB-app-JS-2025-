@@ -183,3 +183,60 @@ main .movie-container .movie-card:hover .overlay {
 .simple-modal .modal-box p {
     line-height: 1.5;
 }
+.rating-section {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.rating-section label {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.rating-section select {
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    border: 1px solid #333;
+    background-color: #222;
+    color: rgb(244, 244, 244);
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease;
+}
+
+.rating-section select:hover {
+    background-color: #333;
+}
+
+.rating-section button {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.save-btn {
+    background-color: #ffcc00;
+    color: #000;
+}
+
+.save-btn:hover {
+    background-color: #e6b800;
+    transform: scale(1.05);
+}
+
+.remove-btn {
+    background-color: #444;
+    color: #fff;
+}
+
+.remove-btn:hover {
+    background-color: #666;
+    transform: scale(1.05);
+}
