@@ -1,24 +1,46 @@
-// ------------------ NEVENA part ------------------ //
-// NEVENA backend code for MovieDB app
-// API:er
+// ==================== Constants & Helpers ====================
+
 const API_KEY = "2b744f1e134577232755c6ac96d94497";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMG_BASE = "https://image.tmdb.org/t/p/original";
-//endpoints for different movie categories
+const LANG = "sv-SE";
+
+const qs = (sel) => document.querySelector(sel);
+const qid = (id) => document.getElementById(id);
+
+function tmdb(path, params = {}) {
+  const url = new URL(`${BASE_URL}/${path}`);
+  url.searchParams.set("api_key", API_KEY);
+  url.searchParams.set("language", LANG);
+  for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+  return url.toString();
+}
+
+async function fetchJSON(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+  return res.json();
+}
+
+// ==================== Endpoints ====================
 
 const endpoints = {
-  popular: `${BASE_URL}/movie/popular?api_key=${API_KEY}`,
-  top: `${BASE_URL}/movie/top_rated?api_key=${API_KEY}`,
-  upcoming: `${BASE_URL}/movie/upcoming?api_key=${API_KEY}`,
-  playing: `${BASE_URL}/movie/now_playing?api_key=${API_KEY}`,
+  popular: tmdb("movie/popular"),
+  top: tmdb("movie/top_rated"),
+  upcoming: tmdb("movie/upcoming"),
+  playing: tmdb("movie/now_playing"),
 };
 
-const hero = document.querySelector(".hero");
+// ==================== DOM References ====================
 
-// Creating movie cards
+const hero = qs(".hero");
+
+// ==================== Movie Cards & Modal ====================
+
 function createCard(movie) {
   const article = document.createElement("article");
   article.classList.add("movie-card");
+  article.dataset.genres = (movie.genre_ids || []).join(",");
 
   const overlay = document.createElement("div");
   overlay.classList.add("overlay");
@@ -27,7 +49,7 @@ function createCard(movie) {
   moviePic.classList.add("movie-pic");
 
   const h3 = document.createElement("h3");
-  h3.textContent = movie.title;
+  h3.textContent = movie.title || "";
 
   const img = document.createElement("img");
   img.src = `${IMG_BASE}/${movie.poster_path}`;
@@ -35,217 +57,272 @@ function createCard(movie) {
   overlay.append(h3);
   moviePic.append(img);
   article.append(overlay, moviePic);
-  // Användaren klickar för att visa detaljer
+
   article.addEventListener("click", () => showMovieDetails(movie.id));
+
   return article;
 }
 
-// movie info + rating info
-function showMovieDetails(movieId) {
-  const url = `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`;
-
-  fetch(url) // vi kan använda axios här också
-    .then((res) => res.json())
-    .then((movie) => {
-      const modal = document.createElement("div");
-      modal.classList.add("simple-modal");
-
-      const modalBox = document.createElement("div");
-      modalBox.classList.add("modal-box");
-
-      const closeBtn = document.createElement("button");
-      closeBtn.classList.add("close-button");
-      closeBtn.textContent = "X";
-      closeBtn.addEventListener("click", () => modal.remove());
-
-      const title = document.createElement("h2");
-      title.textContent = movie.title;
-
-      const desc = document.createElement("p");
-      desc.textContent = movie.overview;
-
-      // Rating section
-      const ratingSection = document.createElement("div");
-      ratingSection.classList.add("rating-section");
-
-      const label = document.createElement("label");
-      label.textContent = "Your rating: ";
-
-      const selectRating = document.createElement("select");
-      selectRating.id = "rating";
-
-      // Option
-      const defaultOption = document.createElement("option");
-      defaultOption.value = "";
-      defaultOption.textContent = "Select rating";
-      selectRating.appendChild(defaultOption);
-
-      // rating options 1-5 stars for every movie
-      const existingRating = getRating(movie.id);
-      for (let i = 1; i <= 5; i++) {
-        const option = document.createElement("option");
-        option.value = i;
-        option.textContent = "★".repeat(i);
-        if (existingRating == i) {
-          option.selected = true;
-        }
-        selectRating.appendChild(option);
-      }
-
-      // saving button for ratings
-      const saveButton = document.createElement("button");
-      saveButton.textContent = "Save Rating";
-      saveButton.classList.add("save-btn");
-      ratingSection.append(label, selectRating, saveButton);
-
-      // remove button if rating exists
-      if (existingRating) {
-        const removeButton = document.createElement("button");
-        removeButton.textContent = "Remove Rating";
-        removeButton.classList.add("remove-btn");
-        ratingSection.append(removeButton);
-
-        removeButton.addEventListener("click", () => {
-          const index = ratingList.findIndex((r) => r.movieId === movie.id);
-          if (index !== -1) {
-            ratingList.splice(index, 1);
-            localStorage.setItem("ratings", JSON.stringify(ratingList));
-            alert(`Removed rating for ${movie.title}`);
-            modal.remove();
-          }
-        });
-      }
-
-      saveButton.addEventListener("click", () => {
-        const selectedRating = parseInt(selectRating.value);
-        if (!selectedRating) {
-          alert("Choose a rating before saving!");
-          return;
-        }
-        addRating(movie.id, selectedRating);
-        alert(`You rated ${movie.title} with ${selectedRating} stars!`);
-        modal.remove();
-      });
-
-      modalBox.append(closeBtn, title, desc, ratingSection);
-      modal.append(modalBox);
-      document.body.append(modal);
-
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) modal.remove();
-      });
-    })
-    .catch((err) => console.error("Fel vid hämtning av detaljer:", err));
-}
-
-// fetch-functionality for movies
-async function loadMovies(url, containerId) {
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    const movies = data.results;
-    const container = document.querySelector(containerId);
-
-    if (!movies || movies.length === 0) {
-      console.log(`Ingen data för ${containerId}`);
-      return;
-    }
-
-    // Hero section for popular movies
-    if (containerId === "#popular") {
-      const heroMovie = movies[0];
-      hero.style.backgroundImage = `url(${IMG_BASE}/${heroMovie.backdrop_path})`;
-
-      const heroArticle = document.createElement("article");
-      heroArticle.classList.add("hero-text");
-
-      heroArticle.innerHTML = `
-        <h1>${heroMovie.title}</h1>
-        <p>${heroMovie.overview}</p>
-      `;
-      hero.append(heroArticle);
-    }
-
-    movies.forEach((movie) => container.append(createCard(movie)));
-  } catch (err) {
-    console.error(`Fel vid hämtning av ${containerId}:`, err);
-  }
-  // Skapa filmkort. Klart.
-}
-
-// Localstorage for saving ratings
 const ratingList = JSON.parse(localStorage.getItem("ratings")) || [];
 
 function addRating(movieId, rating) {
-  const existingRatingIndex = ratingList.findIndex(
-    (r) => r.movieId === movieId
-  );
-  if (existingRatingIndex !== -1) {
-    ratingList[existingRatingIndex].rating = rating;
-  } else {
-    ratingList.push({ movieId, rating });
-  }
+  const idx = ratingList.findIndex((r) => r.movieId === movieId);
+  if (idx !== -1) ratingList[idx].rating = rating;
+  else ratingList.push({ movieId, rating });
   localStorage.setItem("ratings", JSON.stringify(ratingList));
 }
+
 function getRating(movieId) {
-  const ratingEntry = ratingList.find((r) => r.movieId === movieId);
-  return ratingEntry ? ratingEntry.rating : null;
+  const entry = ratingList.find((r) => r.movieId === movieId);
+  return entry ? entry.rating : null;
 }
 
-// Load movies for each category
+async function showMovieDetails(movieId) {
+  try {
+    const [movie, credits] = await Promise.all([
+      fetchJSON(tmdb(`movie/${movieId}`)),
+      fetchJSON(tmdb(`movie/${movieId}/credits`)),
+    ]);
+
+    const cast = (credits.cast || [])
+      .slice(0, 5)
+      .map((p) => p.name)
+      .join(", ");
+    const director =
+      (credits.crew || []).find((p) => p.job === "Director")?.name || "Okänd";
+    const release = movie.release_date || "Okänt datum";
+    const rating =
+      movie.vote_average != null
+        ? `${movie.vote_average.toFixed(1)} / 10`
+        : "Ej betygsatt";
+
+    const modal = document.createElement("div");
+    modal.classList.add("simple-modal");
+
+    const modalBox = document.createElement("div");
+    modalBox.classList.add("modal-box");
+
+    const closeBtn = document.createElement("button");
+    closeBtn.classList.add("close-button");
+    closeBtn.textContent = "X";
+    closeBtn.addEventListener("click", () => modal.remove());
+
+    const title = document.createElement("h2");
+    title.textContent = movie.title || "";
+
+    const meta = document.createElement("p");
+    meta.className = "modal-meta";
+    meta.textContent = `Premiär: ${release} • Regissör: ${director} • Betyg: ${rating}`;
+
+    const actors = document.createElement("p");
+    actors.className = "modal-actors";
+    actors.textContent = `Skådespelare: ${cast}`;
+
+    const desc = document.createElement("p");
+    desc.textContent = movie.overview || "Ingen beskrivning tillgänglig.";
+
+    // Rating section
+    const ratingSection = document.createElement("div");
+    ratingSection.classList.add("rating-section");
+
+    const label = document.createElement("label");
+    label.textContent = "Your rating: ";
+
+    const selectRating = document.createElement("select");
+    selectRating.id = "rating";
+
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Select rating";
+    selectRating.appendChild(defaultOption);
+
+    const existingRating = getRating(movie.id);
+    for (let i = 1; i <= 5; i++) {
+      const opt = document.createElement("option");
+      opt.value = i;
+      opt.textContent = "★".repeat(i);
+      if (existingRating == i) opt.selected = true;
+      selectRating.appendChild(opt);
+    }
+
+    const saveBtn = document.createElement("button");
+    saveBtn.textContent = "Save Rating";
+    saveBtn.classList.add("save-btn");
+
+    ratingSection.append(label, selectRating, saveBtn);
+
+    if (existingRating) {
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "Remove Rating";
+      removeBtn.classList.add("remove-btn");
+      ratingSection.append(removeBtn);
+      removeBtn.addEventListener("click", () => {
+        const idx = ratingList.findIndex((r) => r.movieId === movie.id);
+        if (idx !== -1) {
+          ratingList.splice(idx, 1);
+          localStorage.setItem("ratings", JSON.stringify(ratingList));
+          alert(`Removed rating for ${movie.title}`);
+          modal.remove();
+        }
+      });
+    }
+
+    saveBtn.addEventListener("click", () => {
+      const val = parseInt(selectRating.value);
+      if (!val) {
+        alert("Choose a rating!");
+        return;
+      }
+      addRating(movie.id, val);
+      alert(`You rated ${movie.title} with ${val} stars!`);
+      modal.remove();
+    });
+
+    modalBox.append(closeBtn, title, meta, actors, desc, ratingSection);
+    modal.append(modalBox);
+    document.body.append(modal);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.remove();
+    });
+  } catch (err) {
+    console.error("Fel vid hämtning av detaljer:", err);
+  }
+}
+
+// ==================== Load Movies ====================
+
+async function loadMovies(url, containerSel) {
+  try {
+    const data = await fetchJSON(url);
+    const movies = data.results || [];
+    const container = qs(containerSel);
+    if (!container || !movies.length) return;
+    movies.forEach((m) => container.append(createCard(m)));
+  } catch (err) {
+    console.error(`Fel vid hämtning av ${containerSel}:`, err);
+  }
+}
+
+// ==================== Hero Rotation ====================
+
+function setHeroFromMovie(movie) {
+  if (!movie || !movie.backdrop_path) return;
+  hero.style.backgroundImage = `url(${IMG_BASE}/${movie.backdrop_path})`;
+  hero.innerHTML = "";
+  const article = document.createElement("article");
+  article.classList.add("hero-text");
+  article.innerHTML = `<h1>${movie.title || ""}</h1><p>${
+    movie.overview || ""
+  }</p>`;
+  hero.append(article);
+}
+
+let heroTimer = null;
+async function fetchRandomPopularMovie() {
+  try {
+    const page = Math.floor(Math.random() * 5) + 1;
+    const data = await fetchJSON(tmdb("movie/popular", { page: String(page) }));
+    const list = (data.results || []).filter((m) => m.backdrop_path);
+    if (!list.length) return null;
+    return list[Math.floor(Math.random() * list.length)];
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+async function startHeroRotation() {
+  const first = await fetchRandomPopularMovie();
+  if (first) setHeroFromMovie(first);
+  if (heroTimer) clearInterval(heroTimer);
+  heroTimer = setInterval(async () => {
+    const m = await fetchRandomPopularMovie();
+    if (m) setHeroFromMovie(m);
+  }, 20000);
+}
+
+// ==================== Search ====================
+
+const nameInput = qid("searchName");
+const searchForm = qid("searchForm");
+const searchContainer = qid("search");
+const searchHeading = qid("searchHeading");
+const noResults = qid("noResults");
+
+async function runSearch(evt) {
+  if (evt) evt.preventDefault();
+  const q = (nameInput?.value || "").trim();
+  if (!q) return showSearchResults([]);
+  try {
+    const data = await fetchJSON(
+      tmdb("search/movie", { include_adult: "false", query: q })
+    );
+    showSearchResults(data.results || []);
+  } catch (e) {
+    console.error(e);
+    showSearchResults([]);
+  }
+}
+
+function showSearchResults(list) {
+  searchContainer.innerHTML = "";
+  const has = Array.isArray(list) && list.length > 0;
+  searchHeading.classList.toggle("d-none", !has);
+  searchContainer.classList.toggle("d-none", !has);
+  noResults.classList.toggle("d-none", has || !nameInput.value);
+  if (!has) return;
+  list.slice(0, 20).forEach((m) => searchContainer.append(createCard(m)));
+  searchHeading.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+searchForm?.addEventListener("submit", runSearch);
+nameInput?.addEventListener("input", () => {
+  const hasText = (nameInput.value || "").trim().length >= 2;
+  if (hasText) runSearch();
+  else showSearchResults([]);
+});
+
+// ==================== Navbar & Login / Scroll ====================
+
+qid("LoggaIn")?.addEventListener("click", openLoginModal);
+qid("Registrera")?.addEventListener("click", () =>
+  alert("Registrera knapp klickad!")
+);
+
+function openLoginModal() {
+  const loginModal = bootstrap.Modal.getOrCreateInstance(qid("loginModal"));
+  loginModal.show();
+}
+
+qid("loginForm")?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const username = qid("username").value;
+  const password = qid("password").value;
+  console.log(`User: ${username}, Password: ${password}`);
+  const modal = bootstrap.Modal.getInstance(qid("loginModal"));
+  modal.hide();
+});
+
+// Fix body after modal closing (to prevent scroll lock issues)
+qid("loginModal").addEventListener("hidden.bs.modal", () => {
+  document.body.classList.remove("modal-open");
+  document.body.style.overflow = "";
+  document.querySelector(".modal-backdrop")?.remove();
+});
+
+const scrollBtn = qid("scrollToTopBtn");
+window.addEventListener("scroll", () => {
+  scrollBtn.style.display = window.scrollY > 500 ? "flex" : "none";
+});
+scrollBtn?.addEventListener("click", () =>
+  window.scrollTo({ top: 0, behavior: "smooth" })
+);
+
+// ==================== Initialise ====================
+
 loadMovies(endpoints.popular, "#popular");
 loadMovies(endpoints.top, "#top");
 loadMovies(endpoints.upcoming, "#upcoming");
 loadMovies(endpoints.playing, "#playing");
-
-// ------------------ End of NEVENA part ------------------ //
-
-// ------------------ MORTEZA part ------------------ //
-// Navbar button funktionalitet MORTEZA
-const loginBtn = document.querySelector("#LoggaIn");
-const registerBtn = document.querySelector("#Registrera");
-
-loginBtn.addEventListener("click", openLoginModal);
-
-registerBtn.addEventListener("click", () => {
-  alert("Registrera knapp klickad!");
-});
-
-function openLoginModal() {
-  const loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
-  loginModal.show();
-}
-
-// Hantera inloggningsformulär MORTEZA
-document.getElementById("loginForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-  console.log(`User: ${username}, Password: ${password}`);
-
-  // Här kan du lägga till riktig inloggningslogik
-
-  // Stäng modalen efter inlämning
-  const modal = bootstrap.Modal.getInstance(
-    document.getElementById("loginModal")
-  );
-  modal.hide();
-});
-
-// Back to top button funktionalitet MORTEZA
-
-const scrollBtn = document.getElementById("scrollToTopBtn");
-
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 200) {
-    scrollBtn.style.display = "flex";
-  } else {
-    scrollBtn.style.display = "none";
-  }
-});
-
-scrollBtn.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-// ------------------ End of MORTEZA part ------------------ //
+startHeroRotation();
