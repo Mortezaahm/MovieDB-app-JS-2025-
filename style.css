@@ -141,7 +141,7 @@ p {
   width: auto;
   height: auto;
   object-fit: contain;
-  vertical-align: middle;
+  /* vertical-align: middle; */
 } /* logoresponsivitet */
 
 .navbar-nav .nav-link {

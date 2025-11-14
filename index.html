@@ -27,7 +27,7 @@
           <!-- Varumärke / logotyp -->
           <a class="navbar-brand d-flex align-items-center gap-2 me-2" href="#">
             <img
-              src="cmore  logo.png"
+              src="./img/cmore.png"
               alt="C More"
               class="brand-logo"
               width="136"
@@ -55,12 +55,24 @@
           <div class="collapse navbar-collapse" id="mainNavbar">
             <!-- Huvudlänkar till sektioner på sidan -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item"><a class="nav-link active" href="#">Hem</a></li>
-              <li class="nav-item"><a class="nav-link" href="#popular">Populära filmer</a></li>
-              <li class="nav-item"><a class="nav-link" href="#top">Högst betyg</a></li>
-              <li class="nav-item"><a class="nav-link" href="#upcoming">Kommande filmer</a></li>
-              <li class="nav-item"><a class="nav-link" href="#playing">Spelas nu</a></li>
-              <li class="nav-item"><a class="nav-link" href="OmOss.html">Om oss</a></li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Hem</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#popular">Populära filmer</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#top">Högst betyg</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#upcoming">Kommande filmer</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#playing">Spelas nu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="OmOss.html">Om oss</a>
+              </li>
             </ul>
 
             <!-- Hjälpytor: sök + inloggning/registrering -->
@@ -110,20 +122,41 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="loginModalLabel">Logga in</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Stäng"></button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Stäng"
+            ></button>
           </div>
           <div class="modal-body">
             <form id="loginForm">
               <div class="mb-3">
                 <label for="username" class="form-label">Användarnamn</label>
-                <input type="text" class="form-control" id="username" required />
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  required
+                />
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Lösenord</label>
-                <input type="password" class="form-control" id="password" required />
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  required
+                />
               </div>
               <button type="submit" class="btn btn-success">Logga in</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Stäng</button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Stäng
+              </button>
             </form>
           </div>
         </div>
