@@ -254,16 +254,18 @@ main {
    Scroll to top button
 ======================= */
 #scrollToTopBtn {
+  display: none;
   position: fixed;
   bottom: 2rem;
   right: 2rem;
   padding: 0.5rem 1rem;
   border-radius: 30px;
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
   z-index: 1000;
+  display: none;
 }
 #scrollToTopBtn .back-text {
   position: absolute;

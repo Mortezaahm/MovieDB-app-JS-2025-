@@ -313,7 +313,7 @@ qid("loginModal").addEventListener("hidden.bs.modal", () => {
 
 const scrollBtn = qid("scrollToTopBtn");
 window.addEventListener("scroll", () => {
-  scrollBtn.style.display = window.scrollY > 500 ? "flex" : "none";
+  scrollBtn.style.display = window.scrollY > 300 ? "flex" : "none";
 });
 scrollBtn?.addEventListener("click", () =>
   window.scrollTo({ top: 0, behavior: "smooth" })
