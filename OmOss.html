@@ -11,24 +11,112 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="bg-nav">
+    <!-- NAVIGATION BAR -->
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-nav">
+        <div class="container align-items-center justify-content-between">
+          <a
+            class="navbar-brand d-flex align-items-center gap-2 me-2"
+            href="index.html"
+          >
+            <img
+              src="./img/Final-logo3.png"
+              alt="C More Logo"
+              class="brand-logo"
+              width="auto"
+              height="auto"
+            />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Växla meny"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Hem</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Populära filmer</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Högst betyg</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Kommande filmer</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Spelas nu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="OmOss.html">Om oss</a>
+              </li>
+            </ul>
+            <form id="searchForm" class="navbar-search mx-2 mb-3 mb-lg-0">
+              <input
+                id="searchName"
+                class="form-control"
+                type="search"
+                placeholder="Sök Titel, Serier, Genre..."
+                aria-label="Sök"
+                disabled
+              />
+            </form>
+            <div class="navbar-utility d-flex align-items-center gap-2">
+              <button
+                id="LoggaIn"
+                class="btn btn-outline-light"
+                data-bs-toggle="modal"
+                data-bs-target="#loginModal"
+              >
+                Logga in
+              </button>
+              <button id="Registrera" class="btn btn-light">Registrera</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
     <main class="container py-5">
       <h1 class="mb-3">Om oss</h1>
 
       <p>
-        Välkommen CMore Här möter passionen för film det senaste inom
-        underhållning. Vi samlar populära filmer, aktuella topplistor och
-        kommande premiärer – allt på ett och samma ställe. Utforska vårt breda
-        urval av filmer från hela världen, läs recensioner och artiklar, se
-        trailers, och få en inblick i vad som snart kommer på bioduken. Oavsett
-        om du är en filmälskare, branschintresserad eller bara letar efter nästa
-        filmkvällsfavorit, hittar du inspiration och information här. Följ med
-        oss in i filmens värld – där varje berättelse blir en upplevelse..
+        Välkommen <strong>CineFine</strong> Här möter passionen för film det
+        senaste inom underhållning. Vi samlar populära filmer, aktuella
+        topplistor och kommande premiärer – allt på ett och samma ställe.
+        Utforska vårt breda urval av filmer från hela världen, läs recensioner
+        och artiklar, se trailers, och få en inblick i vad som snart kommer på
+        bioduken. Oavsett om du är en filmälskare, branschintresserad eller bara
+        letar efter nästa filmkvällsfavorit, hittar du inspiration och
+        information här. Följ med oss in i filmens värld – där varje berättelse
+        blir en upplevelse...
+      </p>
+
+      <p>
+        Du är inte bara en besökare här – du är en del av vår filmresa. På
+        <strong>CineFine</strong> vill vi skapa en plats där filmälskare kan
+        fördjupa sig, känna sig hemma och upptäcka nya perspektiv. Förutom att
+        hålla dig uppdaterad med de senaste filmerna och premiärerna, erbjuder
+        vi också tematiska samlingar, intervjuer med kreatörer, och kuraterade
+        rekommendationer för att hjälpa dig hitta guldkorn du annars hade
+        missat. Vi strävar efter att bygga en plattform som inte bara
+        informerar, utan också inspirerar och engagerar. Oavsett om du föredrar
+        blockbusters, indieproduktioner, dokumentärer eller internationell film
+        – finns det alltid något nytt att upptäcka hos oss. Välkommen in –
+        filmen börjar nu.
       </p>
 
       <p>
         Den här tjänsten använder TMDB som källa. Tack för att du tittar förbi!
       </p>
-      <a class="btn btn-light mt-3" href="index.html">Tillbaka</a>
+      <a class="btn btn-light mt-3" href="index.html">Tillbaka Hem</a>
     </main>
   </body>
 </html>
