@@ -326,3 +326,161 @@ loadMovies(endpoints.top, "#top");
 loadMovies(endpoints.upcoming, "#upcoming");
 loadMovies(endpoints.playing, "#playing");
 startHeroRotation();
+
+/* ====================
+   User Movies CRUD (MockAPI)
+   BASE = MockAPI URL
+   =================== */
+const MOCK_BASE = "https://691dede4d58e64bf0d38468a.mockapi.io/userMovies";
+
+/* Generic request wrapper for MockAPI (GET/POST/PUT/DELETE) */
+async function requestMock(url, method = "GET", body = null) {
+  const opts = {
+    method,
+    headers: { "Content-Type": "application/json" },
+  };
+  if (body) opts.body = JSON.stringify(body);
+
+  const res = await fetch(url, opts);
+  if (!res.ok) {
+    // throw a helpful error with status
+    throw new Error(`HTTP ${res.status} ${res.statusText} — ${url}`);
+  }
+  // Some DELETE endpoints return 200/204 with empty body
+  if (res.status === 204) return null;
+  return res.json();
+}
+
+/* --- DOM refs --- */
+const userMovieForm = qid("userMovieForm");
+const userMoviesList = qid("userMoviesList");
+const umTitle = qid("um-title");
+const umRating = qid("um-rating");
+
+/* ========== FETCH (GET) - get all user movies and render ========== */
+async function fetchUserMovies() {
+  try {
+    const data = await requestMock(MOCK_BASE, "GET");
+    const list = Array.isArray(data) ? data : [];
+    renderUserMovies(list);
+  } catch (err) {
+    console.error("Failed to fetch user movies:", err);
+    userMoviesList.innerHTML = `<p style="color:var(--gray)">Kunde inte hämta användarfilmer.</p>`;
+  }
+}
+
+/* ========== RENDER list ========== */
+function renderUserMovies(list) {
+  userMoviesList.innerHTML = ""; // Clear existing, I learned this from Richard :)
+  if (!list.length) {
+    userMoviesList.innerHTML = "<p>Inga användarfilmer än.</p>";
+    return;
+  }
+
+  list.forEach((m) => {
+    const item = document.createElement("div");
+    item.className = "user-movie-item";
+    // ---- Left (title + rating)
+    const leftBox = document.createElement("div");
+
+    const titleEl = document.createElement("strong");
+    titleEl.textContent = m.title;
+
+    const ratingEl = document.createElement("span");
+    ratingEl.style.opacity = "0.85";
+    ratingEl.style.marginLeft = "0.4rem";
+    ratingEl.textContent = `(${m.rating}★)`;
+
+    leftBox.append(titleEl, ratingEl);
+
+    // ---- Right (buttons)
+    const rightBox = document.createElement("div");
+
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.className = "btn btn-sm btn-secondary btn-edit";
+    editBtn.dataset.id = m.id;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.className = "btn btn-sm btn-danger btn-delete";
+    deleteBtn.dataset.id = m.id;
+
+    rightBox.append(editBtn, deleteBtn);
+
+    // ---- Append to container
+    item.append(leftBox, rightBox);
+    userMoviesList.append(item);
+  });
+
+  // Attach delete listeners
+  userMoviesList.querySelectorAll(".btn-delete").forEach((btn) =>
+    btn.addEventListener("click", async (e) => {
+      const id = e.currentTarget.dataset.id;
+      if (!confirm("Vill du ta bort denna film?")) return;
+      try {
+        await requestMock(`${MOCK_BASE}/${id}`, "DELETE");
+        await fetchUserMovies();
+      } catch (err) {
+        console.error("Delete failed:", err);
+        alert("Kunde inte ta bort filmen.");
+      }
+    })
+  );
+
+  // Attach edit listeners
+  userMoviesList.querySelectorAll(".btn-edit").forEach((btn) =>
+    btn.addEventListener("click", async (e) => {
+      const id = e.currentTarget.dataset.id;
+      // Simple edit: prompt for new title and rating
+      const currentTitle =
+        btn.closest(".user-movie-item").querySelector("strong").textContent ||
+        "";
+      const newTitle = prompt("Ny titel:", currentTitle);
+      if (newTitle === null) return; // cancel
+      const newRatingRaw = prompt("Ny rating (måste vara mellan 1-5):");
+      const newRating = parseInt(newRatingRaw, 10);
+      if (
+        !newTitle.trim() ||
+        isNaN(newRating) ||
+        newRating < 1 ||
+        newRating > 5
+      ) {
+        alert("Ogiltig titel eller rating.");
+        return;
+      }
+      try {
+        await requestMock(`${MOCK_BASE}/${id}`, "PUT", {
+          title: newTitle.trim(),
+          rating: newRating,
+        });
+        await fetchUserMovies();
+      } catch (err) {
+        console.error("Update failed:", err);
+        alert("Kunde inte uppdatera filmen.");
+      }
+    })
+  );
+}
+
+/* ========== POST - Add new movie from form ========== */
+userMovieForm?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const title = (umTitle.value || "").trim();
+  const rating = parseInt(umRating.value, 10);
+  if (!title || isNaN(rating) || rating < 1 || rating > 5) {
+    alert("Ange giltig titel och rating (1-5).");
+    return;
+  }
+  try {
+    await requestMock(MOCK_BASE, "POST", { title, rating });
+    userMovieForm.reset();
+    await fetchUserMovies();
+  } catch (err) {
+    console.error("Add failed:", err);
+    alert("Kunde inte lägga till filmen.");
+  }
+});
+
+/* Initialize fetch on load (call once) */
+fetchUserMovies();
