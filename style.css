@@ -215,6 +215,104 @@ main {
 }
 
 /* =======================
+   User Movies (CRUD) styles
+======================= */
+/* Make User Movies section full width like other sections */
+#user-movies-section {
+  max-width: 100%;
+}
+
+/* formulär för att lägga till filmer */
+.user-movie-form {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.user-movie-form input[type="text"],
+.user-movie-form input[type="number"] {
+  flex: 1;
+  padding: 0.45rem 0.6rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid #333;
+  background: #111;
+  color: var(--white);
+  min-width: 0;
+}
+
+.user-movie-form input[type="number"] {
+  max-width: 200px;
+}
+
+/* knapp-styling */
+.user-movie-form .btn {
+  white-space: nowrap;
+}
+
+/* listan med användarfilmer */
+#userMoviesList {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* varje item */
+.user-movie-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.55rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  gap: 0.5rem;
+}
+
+/* text-area */
+.user-movie-item strong {
+  font-size: 0.95rem;
+}
+.user-movie-item span {
+  opacity: 0.85;
+  margin-left: 0.5rem;
+}
+
+/* knappar inuti item */
+.user-movie-item .btn {
+  margin-left: 0.4rem;
+}
+
+/* responsivt: på små skärmar stapla elementen */
+@media (max-width: 640px) {
+  .user-movie-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .user-movie-form .btn {
+    width: 100%;
+  }
+  .user-movie-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .user-movie-item > div:last-child {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.4rem;
+    width: 100%;
+  }
+}
+
+/* valfritt: lite hover för bättre UX */
+.user-movie-item:hover {
+  transform: translateY(-2px);
+  transition: transform 0.15s ease;
+}
+
+/* =======================
    Simple Modal
 ======================= */
 .simple-modal {

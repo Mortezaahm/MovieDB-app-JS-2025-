@@ -175,6 +175,32 @@
 
       <h2>Filmer som spelas just nu</h2>
       <section class="movie-container" id="playing"></section>
+      <!-- USER MOVIES (CRUD - MockAPI) -->
+      <section id="user-movies-section">
+        <h2>Dina filmer</h2>
+
+        <form id="userMovieForm" class="user-movie-form">
+          <input
+            type="text"
+            class="mx-2 m-lg-0"
+            id="um-title"
+            placeholder="Titel"
+            required
+          />
+          <input
+            type="number"
+            id="um-rating"
+            class="mx-2 m-lg-0"
+            placeholder="Rating (1-5)"
+            min="1"
+            max="5"
+            required
+          />
+          <button type="submit" class="btn btn-light">Lägg till film</button>
+        </form>
+
+        <div id="userMoviesList" class="movie-list"></div>
+      </section>
     </main>
 
     <!-- SCROLL TO TOP BUTTON -->
