@@ -4,9 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Filmsida</title>
+
+    <!-- Favicon för sidan -->
     <link rel="icon" type="image/x-icon" href="./img/favicon.png" />
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS (layout, grid, komponenter) -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -14,45 +16,75 @@
       crossorigin="anonymous"
     />
 
-    <!-- Font Awesome -->
+    <!-- Font Awesome (ikoner – används bl.a. till scroll-to-top och mobil-sök) -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
 
-    <!-- Custom CSS -->
+    <!-- Egen CSS för färger, hero, kort, mm. -->
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <!-- NAVIGATION BAR -->
+    <!-- ==========================
+         NAVIGATION BAR / HEADER
+         ==========================
+         Logga vänster, mobil-ikoner (🔍 + ☰) höger, meny + sök inuti collapse.
+    -->
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-nav">
-        <div class="container align-items-center justify-content-between">
+        <!-- Fullbredd-navbar med lite sidopadding på större skärmar -->
+        <div class="container-fluid align-items-center px-lg-5">
+          <!-- Logotyp som länkar till startsidan (vänster) -->
           <a
-            class="navbar-brand d-flex align-items-center gap-2 me-2"
+            class="navbar-brand d-flex align-items-center gap-2"
             href="index.html"
           >
             <img
               src="./img/Final-logo3.png"
-              alt="C More Logo"
+              alt="CineFine Logo"
               class="brand-logo"
               width="auto"
               height="auto"
             />
           </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#mainNavbar"
-            aria-controls="mainNavbar"
-            aria-expanded="false"
-            aria-label="Växla meny"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
+
+          <!-- ===== MOBIL: Sök + Hamburgare (höger) =====
+               d-lg-none = visas bara på mobil/ipad.
+               ms-auto = pushar gruppen helt till höger.
+          -->
+          <div class="d-flex align-items-center ms-auto d-lg-none">
+            <!-- Mobil sök-ikon (🔍) -->
+            <button
+              id="mobileSearchBtn"
+              class="btn btn-outline-light py-1 px-2"
+              type="button"
+              aria-label="Sök"
+            >
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+
+            <!-- Hamburgermenyn för mobil (☰, öppnar/stänger menylänkarna) -->
+            <button
+              class="navbar-toggler ms-1"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#mainNavbar"
+              aria-controls="mainNavbar"
+              aria-expanded="false"
+              aria-label="Växla meny"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+
+          <!-- ===== DESKTOP / COLLAPSED MENY =====
+               I mobil läge: ligger under logga + ikoner när den öppnas.
+               I desktop läge: visas horisontellt p.g.a. navbar-expand-lg.
+          -->
           <div class="collapse navbar-collapse" id="mainNavbar">
+            <!-- Menylänkar till sektioner på sidan + Om oss-sida -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a class="nav-link active" href="index.html">Hem</a>
@@ -73,7 +105,12 @@
                 <a class="nav-link" href="OmOss.html">Om oss</a>
               </li>
             </ul>
-            <form id="searchForm" class="navbar-search mx-2 mb-3 mb-lg-0">
+
+            <!-- Sökfält – visas ENDAST på desktop (d-none d-lg-block) -->
+            <form
+              id="searchForm"
+              class="navbar-search mx-2 mb-3 mb-lg-0 d-none d-lg-block"
+            >
               <input
                 id="searchName"
                 class="form-control"
@@ -82,6 +119,8 @@
                 aria-label="Sök"
               />
             </form>
+
+            <!-- Högerdel: logga in / registrera (syns både desktop & i collapsen på mobil) -->
             <div class="navbar-utility d-flex align-items-center gap-2">
               <button
                 id="LoggaIn"
@@ -98,7 +137,12 @@
       </nav>
     </header>
 
-    <!-- LOGIN MODAL -->
+    <!-- ==========================
+         LOGIN MODAL
+         ==========================
+         Bootstrap-modal som visar ett enkelt inloggningsformulär.
+         Logiken hanteras i index.js (fejk-login + console.log).
+    -->
     <div
       class="modal fade"
       id="loginModal"
@@ -119,6 +163,7 @@
           </div>
           <div class="modal-body">
             <form id="loginForm">
+              <!-- Användarnamnfält -->
               <div class="mb-3">
                 <label for="username" class="form-label">Användarnamn</label>
                 <input
@@ -128,6 +173,7 @@
                   required
                 />
               </div>
+              <!-- Lösenordsfält -->
               <div class="mb-3">
                 <label for="password" class="form-label">Lösenord</label>
                 <input
@@ -137,6 +183,7 @@
                   required
                 />
               </div>
+              <!-- Knappar i modalen -->
               <button type="submit" class="btn btn-success">Logga in</button>
               <button
                 type="button"
@@ -151,34 +198,84 @@
       </div>
     </div>
 
-    <!-- HERO SECTION -->
+    <!-- ==========================
+         MOBIL SÖKMODAL
+         ==========================
+         Används i mobil/ipad-läge när man klickar på förstoringsglaset.
+         Återanvänder samma söklogik som desktop-fältet via index.js.
+    -->
+    <div class="modal fade" id="mobileSearchModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Sök film</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Stäng"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="mobileSearchForm">
+              <input
+                type="search"
+                class="form-control"
+                id="mobileSearchInput"
+                placeholder="Sök Titel..."
+                aria-label="Sök (mobil)"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================
+         HERO SECTION
+         ==========================
+         Stor bild överst. Bakgrundsbild och text sätts dynamiskt i index.js
+         med hjälp av populära filmer från TMDB.
+    -->
     <section class="hero"></section>
 
-    <!-- MAIN CONTENT -->
+    <!-- ==========================
+         MAIN CONTENT
+         ========================== -->
     <main>
-      <!-- SEARCH RESULTS -->
+      <!-- ===== SÖKRESULTAT =====
+           Denna sektion visas bara när användaren har gjort en sökning.
+           Fylls med filmkort via JavaScript.
+      -->
       <h2 id="searchHeading" class="d-none">Sökresultat</h2>
       <section class="movie-container d-none" id="search"></section>
       <div id="noResults" class="alert alert-warning d-none mt-3">
         Inga matchande filmer hittades.
       </div>
 
-      <!-- MOVIE SECTIONS -->
+      <!-- ===== POPULÄRA FILMER ===== -->
       <h2>Populära filmer</h2>
       <section class="movie-container" id="popular"></section>
 
+      <!-- ===== TOP RATED ===== -->
       <h2>Filmer med högsta betyg</h2>
       <section class="movie-container" id="top"></section>
 
+      <!-- ===== KOMMANDE FILMER ===== -->
       <h2>Kommande filmer</h2>
       <section class="movie-container" id="upcoming"></section>
 
+      <!-- ===== NU SPELAS ===== -->
       <h2>Filmer som spelas just nu</h2>
       <section class="movie-container" id="playing"></section>
-      <!-- USER MOVIES (CRUD - MockAPI) -->
+
+      <!-- ==========================
+           USER MOVIES (CRUD - MockAPI)
+           ========================== -->
       <section id="user-movies-section">
         <h2>Mina favoritfilmer</h2>
 
+        <!-- Formulär för att lägga till ny favoritfilm -->
         <form id="userMovieForm" class="user-movie-form">
           <input
             type="text"
@@ -199,17 +296,22 @@
           <button type="submit" class="btn btn-light">Lägg till film</button>
         </form>
 
+        <!-- Lista där favoritfilmer från MockAPI renderas -->
         <div id="userMoviesList" class="movie-list"></div>
       </section>
     </main>
 
-    <!-- SCROLL TO TOP BUTTON -->
+    <!-- ==========================
+         SCROLL TO TOP BUTTON
+         ========================== -->
     <button id="scrollToTopBtn" class="btn btn-light">
       <i class="fa-solid fa-chevron-up"></i>
       <span class="back-text">Back to top</span>
     </button>
 
-    <!-- SCRIPTS -->
+    <!-- ==========================
+         SCRIPTS
+         ========================== -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

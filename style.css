@@ -1,5 +1,7 @@
 /* =======================
    Globala variabler
+   -----------------------
+   Färger, typsnitt, spacing, mm. används genom hela layouten.
 ======================= */
 :root {
   --black: #0f0f0f;
@@ -37,6 +39,8 @@
 
 /* =======================
    Reset & Bas
+   -----------------------
+   Nollställer marginaler och sätter grundstil för body.
 ======================= */
 *,
 html {
@@ -53,7 +57,9 @@ body {
 }
 
 /* =======================
-   Typography
+   Typografi
+   -----------------------
+   Rubrikstorlekar och grundläggande paragrafstil.
 ======================= */
 h1 {
   font-size: var(--fs-h1);
@@ -83,6 +89,8 @@ p {
 
 /* =======================
    Navbar
+   -----------------------
+   Färger, layout och hover-state för navigationsmenyn.
 ======================= */
 .navbar {
   background-color: var(--black) !important;
@@ -102,7 +110,7 @@ p {
   color: var(--gray-light) !important;
 }
 
-/* Navbar utility (search + buttons) */
+/* Navbar utility (sök + knappar) */
 .navbar-utility {
   display: flex;
   align-items: center;
@@ -115,6 +123,7 @@ p {
   display: flex;
   margin-right: var(--space-sm);
 }
+/* Wrapper runt sök-inputen i navbaren */
 .search-wrapper {
   display: flex;
   width: 100%;
@@ -141,6 +150,7 @@ p {
   margin-left: var(--space-sm);
 }
 
+/* Modalens utseende (login) */
 #loginModal {
   color: var(--black);
   background-color: var(--blur);
@@ -149,6 +159,8 @@ p {
 
 /* =======================
    Hero section
+   -----------------------
+   Stor toppsektion som får bakgrundsbild och text via JS.
 ======================= */
 .hero {
   height: var(--hero-height);
@@ -168,10 +180,12 @@ p {
 
 /* =======================
    Main & Movie Containers
+   -----------------------
+   Styling för huvudkolumnen och de horisontella filmraderna.
 ======================= */
 main {
   padding: var(--space-lg);
-  max-width: 1200px;
+  max-width: min(1400px, 100%);
   margin: auto;
 }
 .movie-container {
@@ -182,6 +196,8 @@ main {
   scroll-behavior: smooth;
   margin-top: 1rem;
 }
+
+/* Individuella filmkort som visas i listorna */
 .movie-card {
   flex: 0 0 var(--card-width);
   border-radius: var(--radius-md);
@@ -200,6 +216,8 @@ main {
   display: block;
   border-radius: var(--radius-sm);
 }
+
+/* Mörkt overlay-lager på filmkortet vid hover */
 .overlay {
   position: absolute;
   inset: 0;
@@ -216,13 +234,15 @@ main {
 
 /* =======================
    User Movies (CRUD) styles
+   -----------------------
+   Layout för sektionen 'Mina favoritfilmer' (MockAPI-listan).
 ======================= */
-/* Make User Movies section full width like other sections */
+/* Gör sektionen lika bred som resten av innehållet */
 #user-movies-section {
   max-width: 100%;
 }
 
-/* formulär för att lägga till filmer */
+/* Formulär för att lägga till filmer */
 .user-movie-form {
   width: 100%;
   display: flex;
@@ -246,12 +266,12 @@ main {
   max-width: 200px;
 }
 
-/* knapp-styling */
+/* Knapp-styling för formuläret */
 .user-movie-form .btn {
   white-space: nowrap;
 }
 
-/* listan med användarfilmer */
+/* Lista med användarens filmer (renderas via JS) */
 #userMoviesList {
   margin-top: 1rem;
   display: flex;
@@ -259,7 +279,7 @@ main {
   gap: 0.5rem;
 }
 
-/* varje item */
+/* Varje rad i favoritfilmslistan */
 .user-movie-item {
   display: flex;
   justify-content: space-between;
@@ -271,7 +291,7 @@ main {
   gap: 0.5rem;
 }
 
-/* text-area */
+/* Textinnehåll i listan */
 .user-movie-item strong {
   font-size: 0.95rem;
 }
@@ -280,12 +300,21 @@ main {
   margin-left: 0.5rem;
 }
 
-/* knappar inuti item */
+/* Edit/Delete-knappar inuti varje item */
 .user-movie-item .btn {
   margin-left: 0.4rem;
 }
 
-/* responsivt: på små skärmar stapla elementen */
+/* Responsiv layout: stapla element på små skärmar */
+
+/* Denna del lades till för att hantera bredare skärmar. */
+
+@media (min-width: 1600px) {
+  main {
+    max-width: 90vw; /* utnyttja 90% av skärmens bredd */
+  }
+}
+
 @media (max-width: 640px) {
   .user-movie-form {
     flex-direction: column;
@@ -306,7 +335,7 @@ main {
   }
 }
 
-/* valfritt: lite hover för bättre UX */
+/* Lite hover-effekt för bättre UX */
 .user-movie-item:hover {
   transform: translateY(-2px);
   transition: transform 0.15s ease;
@@ -314,6 +343,8 @@ main {
 
 /* =======================
    Simple Modal
+   -----------------------
+   Egen modal för film-detaljer (inte Bootstrap).
 ======================= */
 .simple-modal {
   position: fixed;
@@ -350,6 +381,8 @@ main {
 
 /* =======================
    Scroll to top button
+   -----------------------
+   Fast knapp nere i högra hörnet som visas vid scroll.
 ======================= */
 #scrollToTopBtn {
   display: none;
@@ -358,7 +391,6 @@ main {
   right: 2rem;
   padding: 0.5rem 1rem;
   border-radius: 30px;
-  /* display: flex; */
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
@@ -384,6 +416,8 @@ main {
 
 /* =======================
    Rating Section Buttons
+   -----------------------
+   Styling för select och knappar i film-detaljmodallen.
 ======================= */
 .rating-section {
   display: flex;
@@ -431,6 +465,8 @@ main {
 
 /* =======================
    Scrollbar styling (Webkit)
+   -----------------------
+   Anpassad horisontell/vertikal scrollbar för filmraderna.
 ======================= */
 ::-webkit-scrollbar {
   height: 12px;
