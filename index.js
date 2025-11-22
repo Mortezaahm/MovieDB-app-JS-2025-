@@ -1,6 +1,6 @@
 // ==================== TMDB-konfiguration & Hjälpfunktioner ====================
 
-// Din personliga API-nyckel mot TMDB (används här i utbildningssyfte)
+// API-nyckel mot TMDB (används här i utbildningssyfte)
 const API_KEY = "2b744f1e134577232755c6ac96d94497";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMG_BASE = "https://image.tmdb.org/t/p/original";
@@ -172,7 +172,7 @@ async function showMovieDetails(movieId) {
     defaultOption.textContent = "Select rating";
     selectRating.appendChild(defaultOption);
 
-    // Om det redan finns ett sparat betyg för filmen, förvälj det
+    // Om det redan finns ett sparat betyg för filmen, väljs det
     const existingRating = getRating(movie.id);
     for (let i = 1; i <= 5; i++) {
       const opt = document.createElement("option");

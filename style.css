@@ -4,37 +4,37 @@
    Färger, typsnitt, spacing, mm. används genom hela layouten.
 ======================= */
 :root {
-  --black: #0f0f0f;
-  --white: #f4f4f4;
-  --gray: #999;
-  --gray-light: #ccc;
-  --overlay: rgba(0, 0, 0, 0.8);
-  --overlay-hero: rgba(15, 15, 15, 0.6);
-  --overlay-modal: rgba(0, 0, 0, 0.6);
-  --primary-color: #ffcc00;
-  --font-main: Arial, Helvetica, sans-serif;
+    --black: #0f0f0f;
+    --white: #f4f4f4;
+    --gray: #999;
+    --gray-light: #ccc;
+    --overlay: rgba(0, 0, 0, 0.8);
+    --overlay-hero: rgba(15, 15, 15, 0.6);
+    --overlay-modal: rgba(0, 0, 0, 0.6);
+    --primary-color: #ffcc00;
+    --font-main: Arial, Helvetica, sans-serif;
 
-  --fs-base: 1rem;
-  --fs-h1: 2.5rem;
-  --fs-h2: 1.8rem;
-  --fs-h3: 1.5rem;
+    --fs-base: 1rem;
+    --fs-h1: 2.5rem;
+    --fs-h2: 1.8rem;
+    --fs-h3: 1.5rem;
 
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 1rem;
-  --space-sm: 0.5rem;
-  --space-md: 0.75rem;
-  --space-lg: 1rem;
-  --space-xl: 1.5rem;
-  --space-xxl: 2rem;
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    --space-sm: 0.5rem;
+    --space-md: 0.75rem;
+    --space-lg: 1rem;
+    --space-xl: 1.5rem;
+    --space-xxl: 2rem;
 
-  --card-width: clamp(140px, 16vw, 200px);
-  --card-aspect: 2 / 3;
-  --hero-height: 560px;
-  --modal-width: 560px;
+    --card-width: clamp(140px, 16vw, 200px);
+    --card-aspect: 2 / 3;
+    --hero-height: 560px;
+    --modal-width: 560px;
 
-  --transition-speed: 0.35s;
-  --blur: 5px;
+    --transition-speed: 0.35s;
+    --blur: 5px;
 }
 
 /* =======================
@@ -44,16 +44,16 @@
 ======================= */
 *,
 html {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: var(--font-main);
-  background-color: var(--black);
-  color: var(--white);
-  font-size: var(--fs-base);
+    font-family: var(--font-main);
+    background-color: var(--black);
+    color: var(--white);
+    font-size: var(--fs-base);
 }
 
 /* =======================
@@ -62,29 +62,29 @@ body {
    Rubrikstorlekar och grundläggande paragrafstil.
 ======================= */
 h1 {
-  font-size: var(--fs-h1);
-  margin-bottom: var(--space-sm);
-  font-weight: 600;
+    font-size: var(--fs-h1);
+    margin-bottom: var(--space-sm);
+    font-weight: 600;
 }
 h2 {
-  font-size: var(--fs-h2);
-  margin-bottom: var(--space-sm);
-  font-weight: 400;
-  margin-top: 2rem;
+    font-size: var(--fs-h2);
+    margin-bottom: var(--space-sm);
+    font-weight: 400;
+    margin-top: 2rem;
 }
 h3 {
-  font-size: var(--fs-h3);
-  margin-bottom: var(--space-sm);
-  text-align: center;
+    font-size: var(--fs-h3);
+    margin-bottom: var(--space-sm);
+    text-align: center;
 }
 p {
-  font-size: var(--fs-base);
-  line-height: 1.5;
+    font-size: var(--fs-base);
+    line-height: 1.5;
 }
 @media (min-width: 992px) {
-  p {
-    margin-bottom: var(--space-xl);
-  }
+    p {
+        margin-bottom: var(--space-xl);
+    }
 }
 
 /* =======================
@@ -93,68 +93,68 @@ p {
    Färger, layout och hover-state för navigationsmenyn.
 ======================= */
 .navbar {
-  background-color: var(--black) !important;
-  padding: var(--space-sm) 1rem;
+    background-color: var(--black) !important;
+    padding: var(--space-sm) 1rem;
 }
 .navbar-brand img {
-  max-height: 34px;
-  max-width: 160px;
+    max-height: 34px;
+    max-width: 160px;
 }
 .navbar-nav .nav-link {
-  color: var(--white) !important;
-  font-weight: 400;
-  transition: color var(--transition-speed);
+    color: var(--white) !important;
+    font-weight: 400;
+    transition: color var(--transition-speed);
 }
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link.active {
-  color: var(--gray-light) !important;
+    color: var(--gray-light) !important;
 }
 
 /* Navbar utility (sök + knappar) */
 .navbar-utility {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
 }
 .navbar-search {
-  flex: 1;
-  max-width: 700px;
-  display: flex;
-  margin-right: var(--space-sm);
+    flex: 1;
+    max-width: 700px;
+    display: flex;
+    margin-right: var(--space-sm);
 }
 /* Wrapper runt sök-inputen i navbaren */
 .search-wrapper {
-  display: flex;
-  width: 100%;
-  background: #111;
-  border: 1px solid var(--gray-light);
-  border-radius: var(--radius-md);
-  overflow: hidden;
+    display: flex;
+    width: 100%;
+    background: #111;
+    border: 1px solid var(--gray-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
 }
 .search-wrapper input {
-  flex: 1;
-  padding: var(--space-sm) var(--space-md);
-  background: transparent;
-  border: none;
-  color: var(--white);
+    flex: 1;
+    padding: var(--space-sm) var(--space-md);
+    background: transparent;
+    border: none;
+    color: var(--white);
 }
 .search-wrapper input::placeholder {
-  color: var(--gray);
+    color: var(--gray);
 }
 .search-wrapper input:focus {
-  outline: none;
-  background: #1a1a1a;
+    outline: none;
+    background: #1a1a1a;
 }
 .navbar-actions button {
-  margin-left: var(--space-sm);
+    margin-left: var(--space-sm);
 }
 
 /* Modalens utseende (login) */
 #loginModal {
-  color: var(--black);
-  background-color: var(--blur);
-  opacity: 0.85;
+    color: var(--black);
+    background-color: var(--blur); /* VILKEN FÄRG MENAR VI HÄR?*/
+    opacity: 0.85;
 }
 
 /* =======================
@@ -163,19 +163,19 @@ p {
    Stor toppsektion som får bakgrundsbild och text via JS.
 ======================= */
 .hero {
-  height: var(--hero-height);
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: var(--space-xl);
+    height: var(--hero-height);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: var(--space-xl);
 }
 .hero .hero-text {
-  padding: var(--space-xl);
-  background-color: var(--overlay-hero);
-  backdrop-filter: blur(var(--blur));
-  flex: 1;
+    padding: var(--space-xl);
+    background-color: var(--overlay-hero);
+    backdrop-filter: blur(var(--blur));
+    flex: 1;
 }
 
 /* =======================
@@ -184,52 +184,52 @@ p {
    Styling för huvudkolumnen och de horisontella filmraderna.
 ======================= */
 main {
-  padding: var(--space-lg);
-  max-width: min(1400px, 100%);
-  margin: auto;
+    padding: var(--space-lg);
+    max-width: min(1400px, 100%);
+    margin: auto;
 }
 .movie-container {
-  display: flex;
-  overflow-x: auto;
-  gap: var(--space-md);
-  padding: var(--space-lg) 0;
-  scroll-behavior: smooth;
-  margin-top: 1rem;
+    display: flex;
+    overflow-x: auto;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+    scroll-behavior: smooth;
+    margin-top: 1rem;
 }
 
 /* Individuella filmkort som visas i listorna */
 .movie-card {
-  flex: 0 0 var(--card-width);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  background-color: rgba(15, 15, 15, 0.8);
-  position: relative;
-  transition: transform var(--transition-speed);
+    flex: 0 0 var(--card-width);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background-color: rgba(15, 15, 15, 0.8);
+    position: relative;
+    transition: transform var(--transition-speed);
 }
 .movie-card:hover {
-  transform: scale(1.02);
+    transform: scale(1.02);
 }
 .movie-card img {
-  width: 100%;
-  aspect-ratio: var(--card-aspect);
-  object-fit: cover;
-  display: block;
-  border-radius: var(--radius-sm);
+    width: 100%;
+    aspect-ratio: var(--card-aspect);
+    object-fit: cover;
+    display: block;
+    border-radius: var(--radius-sm);
 }
 
 /* Mörkt overlay-lager på filmkortet vid hover */
 .overlay {
-  position: absolute;
-  inset: 0;
-  background-color: var(--overlay);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity var(--transition-speed);
+    position: absolute;
+    inset: 0;
+    background-color: var(--overlay);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity var(--transition-speed);
 }
 .movie-card:hover .overlay {
-  opacity: 1;
+    opacity: 1;
 }
 
 /* =======================
@@ -239,81 +239,81 @@ main {
 ======================= */
 /* Gör sektionen lika bred som resten av innehållet */
 #user-movies-section {
-  max-width: 100%;
+    max-width: 100%;
 }
 
 /* Formulär för att lägga till filmer */
 .user-movie-form {
-  width: 100%;
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-  align-items: center;
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
 }
-.user-movie-form input[type="text"],
-.user-movie-form input[type="number"] {
-  flex: 1;
-  padding: 0.45rem 0.6rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid #333;
-  background: #111;
-  color: var(--white);
-  min-width: 0;
+.user-movie-form input[type='text'],
+.user-movie-form input[type='number'] {
+    flex: 1;
+    padding: 0.45rem 0.6rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid #333;
+    background: #111;
+    color: var(--white);
+    min-width: 0;
 }
 
-.user-movie-form input[type="number"] {
-  max-width: 200px;
+.user-movie-form input[type='number'] {
+    max-width: 200px;
 }
 
 /* Ta bort pilarna från number-inputs */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-input[type="number"] {
-  -moz-appearance: textfield;
+input[type='number'] {
+    -moz-appearance: textfield;
 }
 
 /* Knapp-styling för formuläret */
 .user-movie-form .btn {
-  white-space: nowrap;
+    white-space: nowrap;
 }
 
 /* Lista med användarens filmer (renderas via JS) */
 #userMoviesList {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 /* Varje rad i favoritfilmslistan */
 .user-movie-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.55rem;
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  gap: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.55rem;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    gap: 0.5rem;
 }
 
 /* Textinnehåll i listan */
 .user-movie-item strong {
-  font-size: 0.95rem;
+    font-size: 0.95rem;
 }
 .user-movie-item span {
-  opacity: 0.85;
-  margin-left: 0.5rem;
+    opacity: 0.85;
+    margin-left: 0.5rem;
 }
 
 /* Edit/Delete-knappar inuti varje item */
 .user-movie-item .btn {
-  margin-left: 0.4rem;
+    margin-left: 0.4rem;
 }
 
 /* Responsiv layout: stapla element på små skärmar */
@@ -321,35 +321,35 @@ input[type="number"] {
 /* Denna del lades till för att hantera bredare skärmar. */
 
 @media (min-width: 1600px) {
-  main {
-    max-width: 90vw; /* utnyttja 90% av skärmens bredd */
-  }
+    main {
+        max-width: 90vw; /* utnyttja 90% av skärmens bredd */
+    }
 }
 
 @media (max-width: 640px) {
-  .user-movie-form {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .user-movie-form .btn {
-    width: 100%;
-  }
-  .user-movie-item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .user-movie-item > div:last-child {
-    margin-top: 0.5rem;
-    display: flex;
-    gap: 0.4rem;
-    width: 100%;
-  }
+    .user-movie-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .user-movie-form .btn {
+        width: 100%;
+    }
+    .user-movie-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .user-movie-item > div:last-child {
+        margin-top: 0.5rem;
+        display: flex;
+        gap: 0.4rem;
+        width: 100%;
+    }
 }
 
 /* Lite hover-effekt för bättre UX */
 .user-movie-item:hover {
-  transform: translateY(-2px);
-  transition: transform 0.15s ease;
+    transform: translateY(-2px);
+    transition: transform 0.15s ease;
 }
 
 /* =======================
@@ -358,36 +358,36 @@ input[type="number"] {
    Egen modal för film-detaljer (inte Bootstrap).
 ======================= */
 .simple-modal {
-  position: fixed;
-  inset: 0;
-  background-color: var(--overlay-modal);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    position: fixed;
+    inset: 0;
+    background-color: var(--overlay-modal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 .modal-box {
-  background-color: rgba(15, 15, 15, 0.95);
-  border-radius: var(--radius-md);
-  padding: var(--space-xl);
-  width: 95%;
-  max-width: var(--modal-width);
-  color: var(--white);
-  position: relative;
+    background-color: rgba(15, 15, 15, 0.95);
+    border-radius: var(--radius-md);
+    padding: var(--space-xl);
+    width: 95%;
+    max-width: var(--modal-width);
+    color: var(--white);
+    position: relative;
 }
 .close-button {
-  position: absolute;
-  top: var(--space-sm);
-  right: var(--space-sm);
-  background: none;
-  border: 1px solid var(--gray-light);
-  color: var(--white);
-  cursor: pointer;
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--radius-sm);
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    background: none;
+    border: 1px solid var(--gray-light);
+    color: var(--white);
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
 }
 .close-button:hover {
-  background-color: var(--gray);
+    background-color: var(--gray);
 }
 
 /* =======================
@@ -396,33 +396,32 @@ input[type="number"] {
    Fast knapp nere i högra hörnet som visas vid scroll.
 ======================= */
 #scrollToTopBtn {
-  display: none;
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  padding: 0.5rem 1rem;
-  border-radius: 30px;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 1000;
-  display: none;
+    display: none;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1000;
 }
 #scrollToTopBtn .back-text {
-  position: absolute;
-  right: 100%;
-  opacity: 0;
-  transition: all 0.3s ease;
-  font-size: 0.75rem;
-  white-space: nowrap;
+    position: absolute;
+    right: 100%;
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-size: 0.75rem;
+    white-space: nowrap;
 }
 #scrollToTopBtn:hover {
-  padding-right: 5rem;
-  transform: scale(1.3);
+    padding-right: 5rem;
+    transform: scale(1.3);
 }
 #scrollToTopBtn:hover .back-text {
-  right: 1rem;
-  opacity: 1;
+    right: 1rem;
+    opacity: 1;
 }
 
 /* =======================
@@ -431,47 +430,47 @@ input[type="number"] {
    Styling för select och knappar i film-detaljmodallen.
 ======================= */
 .rating-section {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: center;
-  margin-top: var(--space-md);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: var(--space-md);
 }
 .rating-section select {
-  padding: 0.3rem 0.5rem;
-  border-radius: var(--radius-sm);
-  background: #222;
-  color: var(--white);
-  border: 1px solid #333;
-  cursor: pointer;
-  transition: background 0.3s;
+    padding: 0.3rem 0.5rem;
+    border-radius: var(--radius-sm);
+    background: #222;
+    color: var(--white);
+    border: 1px solid #333;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 .rating-section select:hover {
-  background-color: #333;
+    background-color: #333;
 }
 .rating-section button {
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius-sm);
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.2s;
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
 }
 .save-btn {
-  background-color: var(--primary-color);
-  color: #000;
+    background-color: var(--primary-color);
+    color: #000;
 }
 .save-btn:hover {
-  background-color: #e6b800;
-  transform: scale(1.05);
+    background-color: #e6b800;
+    transform: scale(1.05);
 }
 .remove-btn {
-  background-color: #444;
-  color: #fff;
+    background-color: #444;
+    color: #fff;
 }
 .remove-btn:hover {
-  background-color: #666;
-  transform: scale(1.05);
+    background-color: #666;
+    transform: scale(1.05);
 }
 
 /* =======================
@@ -480,17 +479,17 @@ input[type="number"] {
    Anpassad horisontell/vertikal scrollbar för filmraderna.
 ======================= */
 ::-webkit-scrollbar {
-  height: 12px;
-  width: 12px;
+    height: 12px;
+    width: 12px;
 }
 ::-webkit-scrollbar-track {
-  background: #111;
+    background: #111;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--gray);
-  border-radius: 9px;
-  border: 2px solid #111;
+    background: var(--gray);
+    border-radius: 9px;
+    border: 2px solid #111;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--gray-light);
+    background-color: var(--gray-light);
 }
