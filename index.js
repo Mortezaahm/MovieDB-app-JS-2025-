@@ -1,6 +1,6 @@
-// ==================== TMDB-konfiguration & Hjälpfunktioner ====================
+// TMDB-konfiguration & Hjälpfunktioner.
 
-// API-nyckel mot TMDB (används här i utbildningssyfte)
+// Din personliga API-nyckel mot TMDB (används här i utbildningssyfte)
 const API_KEY = "2b744f1e134577232755c6ac96d94497";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMG_BASE = "https://image.tmdb.org/t/p/original";
@@ -33,7 +33,7 @@ async function fetchJSON(url) {
   return res.json();
 }
 
-// ==================== Fördefinierade TMDB-endpoints ====================
+// Fördefinierade TMDB-endpoints för olika filmkategorier.
 
 const endpoints = {
   popular: tmdb("movie/popular"),
@@ -42,12 +42,11 @@ const endpoints = {
   playing: tmdb("movie/now_playing"),
 };
 
-// ==================== DOM-referenser ====================
+// DOM-referenser för hero-sektionen.
 
 const hero = qs(".hero");
 
-// ==================== Filmkort & Detalj-modal ====================
-
+// Filmkort & Detalj-modal.
 /**
  * Skapar ett filmkort (article) för en film-lista.
  * @param {object} movie - filmobjekt från TMDB
@@ -75,14 +74,14 @@ function createCard(movie) {
   moviePic.append(img);
   article.append(overlay, moviePic);
 
+  // När man klickar på kortet visas modal med detaljer
   article.addEventListener("click", () => showMovieDetails(movie.id));
 
   return article;
 }
 
-// ==================== Lokal lagring av egna betyg ====================
-
-// Hämtar tidigare sparade betyg från localStorage, annars tom array
+// Lokal lagring av egna betyg.
+// Hämtar tidigare sparade betyg från localStorage, annars tom array.
 const ratingList = JSON.parse(localStorage.getItem("ratings")) || [];
 
 /**
@@ -114,6 +113,7 @@ function getRating(movieId) {
  */
 async function showMovieDetails(movieId) {
   try {
+    // Hämta både filmdata och skådespelare/crew parallellt
     const [movie, credits] = await Promise.all([
       fetchJSON(tmdb(`movie/${movieId}`)),
       fetchJSON(tmdb(`movie/${movieId}/credits`)),
@@ -131,7 +131,7 @@ async function showMovieDetails(movieId) {
         ? `${movie.vote_average.toFixed(1)} / 10`
         : "Ej betygsatt";
 
-    // Skapa overlay för modalen
+    // Skapar overlay för modalen
     const modal = document.createElement("div");
     modal.classList.add("simple-modal");
 
@@ -157,7 +157,7 @@ async function showMovieDetails(movieId) {
     const desc = document.createElement("p");
     desc.textContent = movie.overview || "Ingen beskrivning tillgänglig.";
 
-    // ======= Sektion för eget betyg (1–5 stjärnor) =======
+    //  Sektion för eget betyg (1–5 stjärnor)
     const ratingSection = document.createElement("div");
     ratingSection.classList.add("rating-section");
 
@@ -172,7 +172,7 @@ async function showMovieDetails(movieId) {
     defaultOption.textContent = "Select rating";
     selectRating.appendChild(defaultOption);
 
-    // Om det redan finns ett sparat betyg för filmen, väljs det
+    // Om det redan finns ett sparat betyg för filmen, förvälj det
     const existingRating = getRating(movie.id);
     for (let i = 1; i <= 5; i++) {
       const opt = document.createElement("option");
@@ -230,8 +230,7 @@ async function showMovieDetails(movieId) {
   }
 }
 
-// ============ Ladda in filmsektionerna ==============
-
+// Ladda in filmsektionerna
 /**
  * Hämtar filmer från en TMDB-endpoint och renderar kort i en container.
  * @param {string} url - färdig TMDB-URL
@@ -249,7 +248,7 @@ async function loadMovies(url, containerSel) {
   }
 }
 
-// ======== Hero-bild (roterande populär film) ===============
+//  Hero-bild (roterande populär film)
 
 /**
  * Sätter hero-bakgrunden + text utifrån en film.
@@ -297,7 +296,7 @@ async function startHeroRotation() {
   }, 20000);
 }
 
-// ========= Sökfunktion (desktop + mobil) =============
+// Sökfunktion (desktop + mobil)
 
 const nameInput = qid("searchName");
 const searchForm = qid("searchForm");
@@ -381,7 +380,7 @@ mobileSearchForm?.addEventListener("submit", (e) => {
   mobileSearchModal?.hide();
 });
 
-// ========== Navbar, Login-modal & Scroll to top ===========
+// Navbar, Login-modal & Scroll to top
 
 qid("LoggaIn")?.addEventListener("click", openLoginModal);
 qid("Registrera")?.addEventListener("click", () =>
@@ -423,7 +422,7 @@ scrollBtn?.addEventListener("click", () =>
   window.scrollTo({ top: 0, behavior: "smooth" })
 );
 
-// ========== Initiering av TMDB-sektioner & Hero ============
+// Initiering av TMDB-sektioner & Hero
 
 // Laddar in de olika filmkategorierna direkt när sidan öppnas
 loadMovies(endpoints.popular, "#popular");
@@ -433,9 +432,8 @@ loadMovies(endpoints.playing, "#playing");
 // Startar hero-rotationen
 startHeroRotation();
 
-// ==================================================================
-//            User Movies CRUD – egna favoritfilmer (MockAPI)
-// ==================================================================
+//
+// User Movies CRUD – egna favoritfilmer (MockAPI)
 
 // Bas-URL till din MockAPI-resurs
 const MOCK_BASE = "https://691dede4d58e64bf0d38468a.mockapi.io/userMovies";
@@ -481,7 +479,7 @@ async function fetchUserMovies() {
     console.error("Failed to fetch user movies:", err);
     if (userMoviesList) {
       userMoviesList.innerHTML =
-        '<p style="color:var(--gray)">Kunde inte hämta användarfilmer.</p>';
+        '<p style="color:var(--color-gray)">Kunde inte hämta användarfilmer.</p>';
     }
   }
 }
@@ -537,7 +535,7 @@ function renderUserMovies(list) {
     userMoviesList.append(item);
   });
 
-  // === Event-hanterare för Delete-knappar ===
+  //  Event-hanterare för Delete-knappar.
   userMoviesList.querySelectorAll(".btn-delete").forEach((btn) =>
     btn.addEventListener("click", async (e) => {
       const id = e.currentTarget.dataset.id;
@@ -552,7 +550,7 @@ function renderUserMovies(list) {
     })
   );
 
-  // === Event-hanterare för Edit-knappar ===
+  //  Event-hanterare för Edit-knappar.
   userMoviesList.querySelectorAll(".btn-edit").forEach((btn) =>
     btn.addEventListener("click", async (e) => {
       const id = e.currentTarget.dataset.id;
@@ -589,7 +587,7 @@ function renderUserMovies(list) {
   );
 }
 
-// ==================== Lägg till ny användarfilm (POST) ====================
+// Lägg till ny användarfilm (POST) när formuläret skickas.
 
 userMovieForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
